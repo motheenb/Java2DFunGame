@@ -1,13 +1,13 @@
-package org.game.server.clients;
+package org.game.server.players;
 
 import java.net.Socket;
 
-public class Client implements Runnable {
+public class Player implements Runnable {
 
     private final int clientID;
     private final Socket socket;
 
-    public Client(final int clientID, final Socket socket) {
+    public Player(final int clientID, final Socket socket) {
         this.clientID = clientID;
         this.socket = socket;
     }
