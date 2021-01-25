@@ -1,12 +1,18 @@
 package org.game.client;
 
+import org.game.client.input.InputHandler;
 import org.game.client.io.GameSocket;
+import org.game.client.players.Player;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameClient extends JFrame {
 
+    private final InputHandler inputHandler = new InputHandler(this);
+    //
+    private Player player = new Player(this);
+    //
     private GameSocket gameSocket = new GameSocket(this);
     //
     private Image img;
@@ -22,9 +28,10 @@ public class GameClient extends JFrame {
         if (img == null) {
             return;
         }
-        gfx.clearRect(0, 0, 500, 500);
-        //
+        gfx.clearRect(0, 0, Configs.WIDTH, Configs.HEIGHT);
+        player.paint(gfx);
         g.drawImage(img, 0, 0, this);
+        repaint();
     }
 
     public void createGUI() {
@@ -32,8 +39,15 @@ public class GameClient extends JFrame {
         setSize(Configs.WIDTH, Configs.HEIGHT);
         setVisible(true);
         setResizable(false);
+        addMouseListener(inputHandler);
+        addMouseMotionListener(inputHandler);
+        addKeyListener(inputHandler);
         img = createImage(Configs.WIDTH, Configs.HEIGHT);
         gfx = img.getGraphics();
+    }
+
+    public static void log(final Object o) {
+        System.out.println(o);
     }
 
     public GameSocket getGameSocket() {
@@ -52,4 +66,11 @@ public class GameClient extends JFrame {
         new GameClient();
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public InputHandler getInputHandler() {
+        return inputHandler;
+    }
 }

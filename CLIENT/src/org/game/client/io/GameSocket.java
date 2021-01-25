@@ -31,7 +31,7 @@ public class GameSocket implements Runnable{
     @Override
     public void run() {
         while (!socket.isClosed()) {
-
+            gameClient.getPlayer().process();
         }
     }
 
