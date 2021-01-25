@@ -1,24 +1,31 @@
 package org.game.client.players;
 
+import org.game.client.Configs;
 import org.game.client.GameClient;
+import org.game.client.sprites.Sprite;
 
 import java.awt.*;
+import java.awt.image.ImageObserver;
 
 public class Player {
 
+    private Sprite sprite;
+    //
     private final GameClient gameClient;
     //
     private int absX, absY, dX, dY;
 
     public Player(final GameClient gameClient) {
         this.gameClient = gameClient;
-        setCoords(30, 30);
+        sprite = new Sprite(Sprite.loadSprite("player.png"));
+        setCoords(35, 435);
     }
 
     public void paint(final Graphics g) {
-        g.setColor(Color.RED);
-        g.fillRect(absX, absY, 5, 5);
-        g.setColor(Color.BLACK);
+        Graphics2D g2d = (Graphics2D) g.create();
+        final double angle = Math.atan2(absY - Configs.MOUSE_Y, absX - Configs.MOUSE_X) - Math.PI / 2;
+        g2d.rotate(angle, absX, absY);
+        g2d.drawImage(sprite.get(), absX-16, absY-16, null);
     }
 
     public void process() {
@@ -76,5 +83,9 @@ public class Player {
 
     public void setAbsX(final int absX) {
         this.absX = absX;
+    }
+
+    public Sprite getSprite() {
+        return sprite;
     }
 }

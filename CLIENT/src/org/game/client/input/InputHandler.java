@@ -1,5 +1,6 @@
 package org.game.client.input;
 
+import org.game.client.Configs;
 import org.game.client.GameClient;
 
 import java.awt.event.*;
@@ -69,7 +70,8 @@ public class InputHandler implements MouseListener, MouseMotionListener, KeyList
 
     @Override
     public void mouseMoved(MouseEvent e) {
-
+        Configs.MOUSE_X = e.getX();
+        Configs.MOUSE_Y = e.getY();
     }
 
     public GameClient getGameClient() {
